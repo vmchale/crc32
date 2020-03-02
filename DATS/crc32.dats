@@ -22,8 +22,8 @@ fn crc32 {l:addr}{m:nat}(pf : !bytes_v(l, m) | p : ptr(l), l : size_t(m)) : uint
           var current_byte = $UN.ptr0_get<uint8>(add_ptr_bsz(p, i))
           var crc_trunc = uint2uint8(crc32)
           var ix: uint8 = g0uint_lxor_uint8(crc_trunc, current_byte)
-          var crc_shift = crc32 >> 8
-          var lookup = ix // array_get_at_guint(crc32_table, ix)
+          var crc_shift = g0uint_lsr(crc32, 8)
+          val lookup = array_get_at_guint(crc32_table, ix)
           val () = crc32 := g0uint_lxor_uint32(lookup, crc_shift)
         in end
   in
