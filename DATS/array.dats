@@ -1,4 +1,3 @@
-// TODO: uint32?
 val crc32_table = @[uint32][256]( 0x00000000u
                                 , 0x77073096u
                                 , 0xEE0E612Cu
