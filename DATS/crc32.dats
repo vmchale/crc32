@@ -11,6 +11,9 @@ castfn uint2uint8(uint32) : uint8
 extern
 castfn uint2uint32(uint) : uint32
 
+extern
+castfn witness(uint8) : [ i : nat | i >= 0 && i < 256 ] uint8(i)
+
 // from here: https://docs.microsoft.com/en-us/openspecs/office_protocols/ms-abs/06966aa2-70da-4bf9-8448-3355f277cd77?redirectedfrom=MSDN
 fn crc32 {l:addr}{m:nat}(pf : !bytes_v(l, m) | p : ptr(l), l : size_t(m)) : uint32 =
   let
@@ -21,7 +24,7 @@ fn crc32 {l:addr}{m:nat}(pf : !bytes_v(l, m) | p : ptr(l), l : size_t(m)) : uint
         let
           var current_byte = $UN.ptr0_get<uint8>(add_ptr_bsz(p, i))
           var crc_trunc = uint2uint8(crc32)
-          var ix: uint8 = g0uint_lxor_uint8(crc_trunc, current_byte)
+          var ix = witness(g0uint_lxor_uint8(crc_trunc, current_byte))
           var crc_shift = g0uint_lsr(crc32, 8)
           val lookup = array_get_at_guint(crc32_table, ix)
           val () = crc32 := g0uint_lxor_uint32(lookup, crc_shift)
