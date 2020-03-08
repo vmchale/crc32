@@ -1,5 +1,3 @@
 # crc32
 
-## Installation
-
-## Configuration
+A crc32 function in ATS.
